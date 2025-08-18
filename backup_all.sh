@@ -20,7 +20,7 @@ cp $ai_memory_path $backup_directory/ai_memory_${filename_date}.json
 #  backup db
 echo "Backing up database..."
 sudo docker compose exec -T db bash -c "pg_dump -Fc -U example-misskey-user -d misskey > /var/lib/postgresql/data/misskey_db.dump"
-filepath=$misskey_directory_path/misskey_db_${filename_date// /_}.dump
+filepath=misskey_db_$filename_date.dump
 sudo mv $misskey_directory_path/db/misskey_db.dump $backup_directory/$filepath
 
 # backup redis
