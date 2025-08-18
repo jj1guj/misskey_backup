@@ -4,7 +4,6 @@ misskey_server_url=$(cat config.json | jq -r '.misskey_server_url')
 misskey_api_key=$(cat config.json | jq -r '.misskey_api_key')
 misskey_directory_path=$(cat config.json | jq -r '.misskey_directory_path')
 ai_memory_path=$(cat config.json | jq -r '.ai_memory_path')
-files_path=$(cat config.json | jq -r '.files_path')
 
 d=$(date)
 filename_date=${d// /_}
@@ -29,7 +28,7 @@ sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename
 
 # backup files
 echo "Backing up files..."
-sudo zip -q -r $backup_directory/$files_path.zip $files_path
+sudo zip -q -r $backup_directory/files_${filename_date}.zip $misskey_directory_path/files
 
 # zip all backups
 echo "Creating zip archive of all backups..."

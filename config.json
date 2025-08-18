@@ -3,6 +3,5 @@
     "misskey_server_url": "https://example.com",
     "misskey_api_key": "API_KEY",
     "misskey_directory_path": "/path/to/misskey",
-    "ai_memory_path": "/path/to/ai_memory.json",
-    "files_path": "/path/to/files"
+    "ai_memory_path": "/path/to/ai_memory.json"
 }
