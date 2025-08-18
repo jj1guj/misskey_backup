@@ -29,11 +29,11 @@ sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename
 
 # backup files
 echo "Backing up files..."
-sudo zip -r $backup_directory/$files_path.zip $files_path
+sudo zip -q -r $backup_directory/$files_path.zip $files_path
 
 # zip all backups
 echo "Creating zip archive of all backups..."
-sudo zip -r $backup_directory/misskey_backup_${filename_date}.zip $backup_directory
+sudo zip -q -r $backup_directory/misskey_backup_${filename_date}.zip $backup_directory
 
 # upload to gdrive
 echo "Uploading backups to Google Drive..."
