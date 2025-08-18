@@ -9,6 +9,7 @@ files_path=$(cat config.json | jq -r '.files_path')
 d=$(date)
 filename_date=${d// /_}
 backup_directory=/tmp/misskey_backup_$filename_date
+mkdir -p $backup_directory
 
 cd $misskey_directory_path
 
