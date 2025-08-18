@@ -3,6 +3,8 @@ gdrive_folder_id=$(cat config.json | jq -r '.gdrive_folder_id')
 misskey_server_url=$(cat config.json | jq -r '.misskey_server_url')
 misskey_api_key=$(cat config.json | jq -r '.misskey_api_key')
 misskey_directory_path=$(cat config.json | jq -r '.misskey_directory_path')
+ai_memory_path=$(cat config.json | jq -r '.ai_memory_path')
+files_path=$(cat config.json | jq -r '.files_path')
 
 d=$(date)
 filename_date=${d// /_}
@@ -11,7 +13,6 @@ backup_directory=/tmp/misskey_backup_$filename_date
 cd $misskey_directory_path
 
 # backup ai
-ai_memory_path=$(cat config.json | jq -r '.ai_memory_path')
 cp $ai_memory_path $backup_directory/ai_memory_${filename_date}.json
 
 #  backup db
@@ -23,7 +24,6 @@ sudo mv $misskey_directory_path/db/misskey_db.dump $backup_directory/$filepath
 sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename_date}.rdb
 
 # backup files
-files_path=$(cat config.json | jq -r '.files_path')
 sudo zip -r $backup_directory/$files_path.zip $files_path
 
 # zip all backups
