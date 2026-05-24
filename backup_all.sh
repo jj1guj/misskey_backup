@@ -31,7 +31,7 @@ sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename
 
 # backup files
 echo "Backing up files..."
-sudo zip -q -r $backup_directory/files_${filename_date}.zip $misskey_directory_path/files
+sudo cp -r $misskey_directory_path/files $backup_directory/files
 
 # zip all backups
 echo "Creating zip archive of all backups..."
