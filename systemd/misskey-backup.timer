@@ -1,0 +1,14 @@
+[Unit]
+Description=Run Misskey full backup daily (except Jan 1 at 04:00)
+
+[Timer]
+# Jan 1 runs at 04:00
+OnCalendar=*-01-01 04:00:00
+# Jan 2-31 runs at 00:00
+OnCalendar=*-01-02..31 00:00:00
+# Feb-Dec runs at 00:00 daily
+OnCalendar=*-02..12-* 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
