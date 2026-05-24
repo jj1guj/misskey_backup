@@ -36,3 +36,22 @@ sudo systemctl enable --now misskey-backup.timer
 ```bash
 systemctl list-timers misskey-backup.timer
 ```
+
+# Restore from encrypted backup
+
+## Decrypt
+Run the following command for a downloaded backup file (`.zip.gpg`).
+
+```bash
+gpg --output misskey_backup_restore.zip --decrypt /path/to/misskey_backup_YYYY-MM-DD.zip.gpg
+```
+
+If prompted, enter the same value configured as `gpg_password` in `config.json`.
+
+## Extract
+```bash
+mkdir -p /tmp/misskey_restore
+unzip -q misskey_backup_restore.zip -d /tmp/misskey_restore
+```
+
+Extracted backup data will be available under `/tmp/misskey_restore/`.
