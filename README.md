@@ -24,6 +24,7 @@ Use the included units in `systemd/` to run full backup automatically.
 
 ## Install (system service)
 1. Replace `/path/to/misskey_backup` in `systemd/misskey-backup.service` with your actual path.
+2. Replace `YOUR_USERNAME` in `systemd/misskey-backup.service` with the user who has `gdrive` authenticated (the user whose `~/.config/gdrive/` contains valid tokens).
 
 ```bash
 sudo cp systemd/misskey-backup.service /etc/systemd/system/
