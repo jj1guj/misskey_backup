@@ -22,20 +22,25 @@ Use the included units in `systemd/` to run full backup automatically.
 * Jan 1: 04:00
 * Other days: 00:00
 
-## Install (system service)
+## Install (user service)
 1. Replace `/path/to/misskey_backup` in `systemd/misskey-backup.service` with your actual path.
-2. Replace `YOUR_USERNAME` in `systemd/misskey-backup.service` with the user who has `gdrive` authenticated (the user whose `~/.config/gdrive/` contains valid tokens).
 
 ```bash
-sudo cp systemd/misskey-backup.service /etc/systemd/system/
-sudo cp systemd/misskey-backup.timer /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now misskey-backup.timer
+mkdir -p ~/.config/systemd/user/
+cp systemd/misskey-backup.service ~/.config/systemd/user/
+cp systemd/misskey-backup.timer ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now misskey-backup.timer
+```
+
+To keep the timer running after logout:
+```bash
+sudo loginctl enable-linger $USER
 ```
 
 ## Check next runs
 ```bash
-systemctl list-timers misskey-backup.timer
+systemctl --user list-timers misskey-backup.timer
 ```
 
 # Restore from encrypted backup
