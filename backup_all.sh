@@ -35,7 +35,7 @@ sudo cp -r $misskey_directory_path/files $backup_directory/files
 
 # zip all backups
 echo "Creating zip archive of all backups..."
-sudo zip -q -r $backup_zip $backup_directory
+(cd /tmp && sudo zip -q -r $backup_zip misskey_backup_$filename_date)
 
 # encrypt archive with gpg
 echo "Encrypting backup archive with GPG..."
