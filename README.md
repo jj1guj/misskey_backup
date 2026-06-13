@@ -4,6 +4,7 @@ Backup script for Misskey
 # Requirements
 * [gdrive](https://github.com/glotlabs/gdrive)
 * [jq](https://jqlang.github.io/jq/)
+* [pigz](https://zlib.net/pigz/)
 
 # Usage
 1. edit `config.json`
@@ -45,19 +46,14 @@ systemctl --user list-timers misskey-backup.timer
 
 # Restore from encrypted backup
 
-## Decrypt
-Run the following command for a downloaded backup file (`.zip.gpg`).
+## Decrypt and extract
+Run the following command for a downloaded backup file (`.tar.gz.gpg`).
 
 ```bash
-gpg --output misskey_backup_restore.zip --decrypt /path/to/misskey_backup_YYYY-MM-DD.zip.gpg
+mkdir -p /tmp/misskey_restore
+gpg --decrypt /path/to/misskey_backup_YYYY-MM-DD.tar.gz.gpg | pigz -d | tar xf - -C /tmp/misskey_restore
 ```
 
 If prompted, enter the same value configured as `gpg_password` in `config.json`.
-
-## Extract
-```bash
-mkdir -p /tmp/misskey_restore
-unzip -q misskey_backup_restore.zip -d /tmp/misskey_restore
-```
 
 Extracted backup data will be available under `/tmp/misskey_restore/`.

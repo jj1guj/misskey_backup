@@ -9,8 +9,7 @@ gpg_password=$(cat config.json | jq -r '.gpg_password')
 d=$(date)
 filename_date=${d// /_}
 backup_directory=/tmp/misskey_backup_$filename_date
-backup_zip=/tmp/misskey_backup_${filename_date}.zip
-backup_gpg=/tmp/misskey_backup_${filename_date}.zip.gpg
+backup_gpg=/tmp/misskey_backup_${filename_date}.tar.gz.gpg
 mkdir -p $backup_directory
 
 cd $misskey_directory_path
@@ -29,17 +28,11 @@ sudo mv $misskey_directory_path/db/misskey_db.dump $backup_directory/$filepath
 echo "Backing up Redis data..."
 sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename_date}.rdb
 
-# backup files
-echo "Backing up files..."
-sudo cp -r $misskey_directory_path/files $backup_directory/files
-
-# zip all backups
-echo "Creating zip archive of all backups..."
-(cd /tmp && sudo zip -q -r $backup_zip misskey_backup_$filename_date)
-
-# encrypt archive with gpg
-echo "Encrypting backup archive with GPG..."
-sudo gpg --batch --yes --pinentry-mode loopback --passphrase "$gpg_password" --symmetric --cipher-algo AES256 --output $backup_gpg $backup_zip
+# archive, compress, and encrypt all backups (including files) in one pipeline
+echo "Creating compressed and encrypted backup archive..."
+sudo tar cf - -C /tmp misskey_backup_$filename_date -C $misskey_directory_path files \
+  | pigz -p 2 \
+  | gpg --batch --yes --pinentry-mode loopback --passphrase "$gpg_password" --symmetric --cipher-algo AES256 --output $backup_gpg
 
 # upload to gdrive
 echo "Uploading backups to Google Drive..."
@@ -48,7 +41,6 @@ sudo gdrive files upload --parent $gdrive_folder_id $backup_gpg
 # clean up
 echo "Cleaning up local backup files..."
 sudo rm -rf $backup_directory
-sudo rm -f $backup_zip
 sudo rm -f $backup_gpg
 
 # notify completion
