@@ -75,13 +75,6 @@ bash backup_core.sh    # DB, Redis, AI memory
 bash backup_files.sh   # Media files (rclone sync)
 ```
 
-Individual backup scripts are also available:
-
-```bash
-bash backup_ai.sh
-bash backup_db.sh
-```
-
 # systemd timers
 
 Two separate services are provided:

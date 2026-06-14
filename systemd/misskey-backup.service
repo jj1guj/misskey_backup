@@ -1,9 +1,0 @@
-[Unit]
-Description=Misskey full backup job
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-WorkingDirectory=/path/to/misskey_backup
-ExecStart=/usr/bin/env bash /path/to/misskey_backup/backup_all.sh
