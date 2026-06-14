@@ -2,9 +2,69 @@
 Backup script for Misskey
 
 # Requirements
-* [gdrive](https://github.com/glotlabs/gdrive)
+* [rclone](https://rclone.org/)
 * [jq](https://jqlang.github.io/jq/)
 * [pigz](https://zlib.net/pigz/)
+
+# Setup
+
+## 1. config.json
+Edit `config.json` with your environment settings.
+
+## 2. rclone setup
+
+### Google Drive remote
+
+```bash
+rclone config
+```
+
+1. `n` → New remote
+2. name: `gdrive`
+3. Storage: `Google Drive`
+4. client_id / client_secret: leave empty
+5. scope: `1` (Full access)
+6. service_account_file: leave empty
+7. Advanced config: `n`
+8. Auto config: `n` (for remote servers)
+9. Run `rclone authorize "drive" "<displayed token>"` on a local machine with a browser, then paste the result
+10. Team Drive: `n` (for personal drives)
+
+### Encrypted remote (crypt)
+
+Continue with `rclone config`:
+
+1. `n` → New remote
+2. name: `gdrive-crypt`
+3. Storage: `Encrypt/Decrypt a remote` (crypt)
+4. remote: `gdrive:<your_backup_dir>/files`
+5. filename_encryption: `standard`
+6. directory_name_encryption: `true`
+7. password: enter a passphrase (**make sure to save this; losing it makes decryption impossible**)
+8. password2 (salt): recommended (**save this as well**)
+9. Advanced config: `n`
+
+### Protect config file
+
+```bash
+chmod 600 ~/.config/rclone/rclone.conf
+```
+
+### Verify setup
+
+```bash
+rclone lsd gdrive:<your_backup_dir>
+sudo rclone sync --dry-run /path/to/misskey/files gdrive-crypt: --config /path/to/.config/rclone/rclone.conf
+```
+
+### Initial sync
+
+The initial sync transfers all files and may take several hours. Run inside `tmux`.
+
+```bash
+tmux
+sudo rclone sync /path/to/misskey/files gdrive-crypt: --config /path/to/.config/rclone/rclone.conf --transfers 4 --progress
+```
 
 # Usage
 1. edit `config.json`
