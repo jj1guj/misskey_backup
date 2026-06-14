@@ -5,7 +5,7 @@ misskey_directory_path=$(cat config.json | jq -r '.misskey_directory_path')
 rclone_config_path=$(cat config.json | jq -r '.rclone_config_path')
 
 echo "Syncing files to Google Drive..."
-sudo rclone sync $misskey_directory_path/files gdrive-crypt: --config $rclone_config_path --transfers 4
+sudo rclone sync $misskey_directory_path/files gdrive-crypt: --config $rclone_config_path --transfers 32 --checkers 32 --tpslimit 100 --fast-list
 
 # notify completion
 curl -XPOST -H 'Content-Type:application/json' -d "{\"i\":\"$misskey_api_key\",\"text\":\"$(date)\nFiles backup completed\"}" $misskey_server_url/api/notes/create

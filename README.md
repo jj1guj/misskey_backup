@@ -22,8 +22,9 @@ rclone config
 1. `n` → New remote
 2. name: `gdrive`
 3. Storage: `Google Drive`
-4. client_id / client_secret: leave empty
-5. scope: `1` (Full access)
+4. client_id: your own OAuth Client ID (create one at [Google Cloud Console](https://console.cloud.google.com/) → APIs & Services → Credentials → OAuth client ID → Desktop app)
+5. client_secret: your own OAuth Client Secret
+6. scope: `1` (Full access)
 6. service_account_file: leave empty
 7. Advanced config: `n`
 8. Auto config: `n` (for remote servers)
