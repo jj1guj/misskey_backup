@@ -31,7 +31,7 @@ sudo cp $misskey_directory_path/redis/dump.rdb $backup_directory/dump_${filename
 
 # zip all backups
 echo "Creating zip archive..."
-sudo zip -q -r $backup_zip $backup_directory
+(cd /tmp && sudo zip -q -r $backup_zip misskey_backup_$filename_date)
 
 # encrypt archive with gpg
 echo "Encrypting backup archive with GPG..."
