@@ -4,5 +4,6 @@
     "misskey_api_key": "API_KEY",
     "misskey_directory_path": "/path/to/misskey",
     "ai_memory_path": "/path/to/ai_memory.json",
-    "gpg_password": "GPG_PASSWORD"
+    "gpg_password": "GPG_PASSWORD",
+    "rclone_config_path": "/path/to/.config/rclone/rclone.conf"
 }

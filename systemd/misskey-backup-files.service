@@ -1,0 +1,9 @@
+[Unit]
+Description=Misskey files backup job (rclone sync)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/path/to/misskey_backup
+ExecStart=/usr/bin/env bash /path/to/misskey_backup/backup_files.sh
