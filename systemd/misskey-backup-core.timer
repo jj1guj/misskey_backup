@@ -8,6 +8,7 @@ OnCalendar=*-01-01 04:00:00
 OnCalendar=*-01-02..31 00:00:00
 # Feb-Dec runs at 00:00 daily
 OnCalendar=*-02..12-* 00:00:00
+AccuracySec=1s
 Persistent=true
 
 [Install]
